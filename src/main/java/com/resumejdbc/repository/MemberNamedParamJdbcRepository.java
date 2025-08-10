@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -68,12 +69,13 @@ public class MemberNamedParamJdbcRepository {
 	 * @throws Exception
 	 */
 	public Member findById(Long id) throws Exception {
-		Map<String, Object> args = new HashMap<>();
+		Member args = new Member();
+		
 		//プレースホルダの設定
-		args.put("id", id);
+		args.setId(id);
 		Member member = template.queryForObject(
 				"SELECT id, name, birth, email FROM members WHERE id = :id",
-				args,
+				new BeanPropertySqlParameterSource(args),
 				new BeanPropertyRowMapper<>(Member.class)); //戻り値の型
 
 		return member;
@@ -87,22 +89,22 @@ public class MemberNamedParamJdbcRepository {
 	 * @throws Exception
 	 */
 	public long countByEmail(String email, Long excludeId) throws Exception {
-		Map<String, Object> args = new HashMap<>();
+		Member member = new Member();
 		
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(*) FROM members WHERE email = :email");
 		//プレースホルダの設定
-		args.put("email", email);
+		member.setEmail(email);
 		
 		if(Objects.nonNull(excludeId)) {
 			//検索対象外のIDが指定されている
-			sql.append(" AND id != :excludeId");
-			args.put("excludeId", excludeId);
+			sql.append(" AND id != :id");
+			member.setId(excludeId);
 		}
 		
 		Long count = template.queryForObject(
 				sql.toString(),
-				args,
+				new BeanPropertySqlParameterSource(member),
 				Long.class); //戻り値の型
 		return count;
 	}
@@ -113,14 +115,9 @@ public class MemberNamedParamJdbcRepository {
 	 * @throws Exception
 	 */
 	public void insert(Member member) throws Exception {
-		Map<String, Object> args = new HashMap<>();
-		//新規登録 プレースホルダの順番にaddすること
-		args.put("name", member.getName());
-		args.put("birth", member.getBirth());
-		args.put("email", member.getEmail());
 		template.update(
 				"INSERT INTO members(name, birth, email) VALUES(:name, :birth, :email)",
-				args);
+				new BeanPropertySqlParameterSource(member));
 	}
 
 	/**
@@ -129,15 +126,9 @@ public class MemberNamedParamJdbcRepository {
 	 * @throws Exception
 	 */
 	public void update(Member member) throws Exception {
-		Map<String, Object> args = new HashMap<>();
-		//更新 プレースホルダの順番にaddすること
-		args.put("name", member.getName());
-		args.put("birth", member.getBirth());
-		args.put("email", member.getEmail());
-		args.put("id", member.getId());
 		template.update(
 				"UPDATE members SET name = :name, birth = :birth, email = :email WHERE id = :id",
-				args);
+				new BeanPropertySqlParameterSource(member));
 	}
 	
 	/**
@@ -146,12 +137,12 @@ public class MemberNamedParamJdbcRepository {
 	 * @throws Exception
 	 */
 	public void delete(Long id) throws Exception {
-		Map<String, Object> args = new HashMap<>();
+		Member member = new Member();
 		//削除
-		args.put("id", id);
+		member.setId(id);
 		template.update(
 				"DELETE FROM members WHERE id = :id",
-				args);
+				new BeanPropertySqlParameterSource(member));
 		
 	}
 	
