@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.resumejdbc.entity.Member;
-import com.resumejdbc.repository.MemberNamedParamJdbcRepository;
-import com.resumejdbc.repository.ResumeNamedParamJdbcRepository;
+import com.resumejdbc.repository.MemberJdbcRepository;
+import com.resumejdbc.repository.ResumeJdbcRepository;
 import com.resumejdbc.request.MemberSearchCriteria;
 import com.resumejdbc.result.Result;
 
@@ -19,10 +19,10 @@ import com.resumejdbc.result.Result;
 public class MemberService {
 
 	//会員リポジトリ
-	private MemberNamedParamJdbcRepository memberRepo;
+	private MemberJdbcRepository memberRepo;
 	
 	//経歴リポジトリ
-	private ResumeNamedParamJdbcRepository resumeRepo;
+	private ResumeJdbcRepository resumeRepo;
 	
 	//メッセージ
 	private MessageSource messageSrc;
@@ -33,7 +33,7 @@ public class MemberService {
 	 * @param resumeRepo 経歴リポジトリ
 	 * @param messageSrc メッセージ
 	 */
-	public MemberService(MemberNamedParamJdbcRepository memberRepo, ResumeNamedParamJdbcRepository resumeRepo, MessageSource messageSrc) {
+	public MemberService(MemberJdbcRepository memberRepo, ResumeJdbcRepository resumeRepo, MessageSource messageSrc) {
 		this.memberRepo = memberRepo;
 		this.resumeRepo = resumeRepo;
 		this.messageSrc = messageSrc;

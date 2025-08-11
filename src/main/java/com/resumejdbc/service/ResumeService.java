@@ -9,19 +9,19 @@ import com.resumejdbc.convertor.LocalDate2YearMonthConvertor;
 import com.resumejdbc.convertor.YearMonth2DateConvertor;
 import com.resumejdbc.entity.MemberResume;
 import com.resumejdbc.entity.Resume;
-import com.resumejdbc.repository.ResumeNamedParamJdbcRepository;
+import com.resumejdbc.repository.ResumeJdbcRepository;
 
 @Service
 public class ResumeService {
 
 	//経歴リポジトリ
-	private ResumeNamedParamJdbcRepository resumeRepo;
+	private ResumeJdbcRepository resumeRepo;
 	
 	/**
 	 * コンストラクタ
 	 * @param resumeRepo 経歴リポジトリ
 	 */
-	public ResumeService(ResumeNamedParamJdbcRepository resumeRepo) {
+	public ResumeService(ResumeJdbcRepository resumeRepo) {
 		this.resumeRepo = resumeRepo;
 	}
 	

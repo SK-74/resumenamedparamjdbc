@@ -11,7 +11,7 @@ import com.resumejdbc.entity.MemberResume;
 import com.resumejdbc.entity.Resume;
 
 @Repository
-public class ResumeNamedParamJdbcRepository {
+public class ResumeJdbcRepository {
 
 	private NamedParameterJdbcTemplate template;
 
@@ -19,7 +19,7 @@ public class ResumeNamedParamJdbcRepository {
 	 * トラクタ
 	 * @param template NamedParameterJdbcTemplate
 	 */
-	public ResumeNamedParamJdbcRepository(NamedParameterJdbcTemplate template) {
+	public ResumeJdbcRepository(NamedParameterJdbcTemplate template) {
 		this.template = template;
 	}
 

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.resumejdbc.entity.Member;
 
 @Repository
-public class MemberNamedParamJdbcRepository {
+public class MemberJdbcRepository {
 
 	private NamedParameterJdbcTemplate template;
 
@@ -22,7 +22,7 @@ public class MemberNamedParamJdbcRepository {
 	 * コンストラクタ
 	 * @param template NamedParameterJdbcTemplate
 	 */
-	public MemberNamedParamJdbcRepository(NamedParameterJdbcTemplate template) {
+	public MemberJdbcRepository(NamedParameterJdbcTemplate template) {
 		this.template = template;
 	}
 
